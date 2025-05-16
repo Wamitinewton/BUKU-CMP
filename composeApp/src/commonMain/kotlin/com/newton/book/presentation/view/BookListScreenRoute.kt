@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.book.domain.Book
+import com.newton.book.domain.models.Book
 import com.newton.book.presentation.intent.BookListAction
 import com.newton.book.presentation.viewModel.BookListViewModel
 import org.koin.compose.viewmodel.koinViewModel

@@ -1,6 +1,6 @@
 package com.newton.book.presentation.intent
 
-import com.newton.book.domain.Book
+import com.newton.book.domain.models.Book
 
 sealed interface BookListAction {
     data class OnSearchQueryChange(val query: String): BookListAction

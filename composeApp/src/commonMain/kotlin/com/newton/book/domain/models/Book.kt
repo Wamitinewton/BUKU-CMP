@@ -1,4 +1,4 @@
-package com.newton.book.domain
+package com.newton.book.domain.models
 
 data class Book(
     val id: String,

@@ -1,6 +1,6 @@
 package com.newton.book.presentation.state
 
-import com.newton.book.domain.Book
+import com.newton.book.domain.models.Book
 import com.newton.core.presentation.UiText
 
 data class BookListState(
