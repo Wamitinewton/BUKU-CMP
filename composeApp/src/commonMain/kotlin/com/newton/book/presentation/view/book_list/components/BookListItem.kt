@@ -1,4 +1,4 @@
-package com.newton.book.presentation.view.components
+package com.newton.book.presentation.view.book_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -43,6 +43,7 @@ import com.newton.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import kotlin.math.round
 
+
 @Composable
 fun BookListItem(
     book: Book,
@@ -69,44 +70,49 @@ fun BookListItem(
                     .height(100.dp),
                 contentAlignment = Alignment.Center
             ) {
-                var imageLoadResult by remember {
-                    mutableStateOf<Result<Painter>?>(null)
-                }
+                var isLoading by remember { mutableStateOf(true) }
+                var isError by remember { mutableStateOf(false) }
+
 
                 val painter = rememberAsyncImagePainter(
                     model = book.imageUrl,
+                    onLoading = {
+                        isLoading = true
+                        isError = false
+                    },
                     onSuccess = {
-                        if (it.painter.intrinsicSize.width > 1 && it.painter.intrinsicSize.height > 1) {
-                            Result.success(it.painter)
-                        } else {
-                            Result.failure(Exception("Invalid image size"))
-                        }
+                        isLoading = false
+                        isError = false
                     },
                     onError = {
+                        isLoading = false
+                        isError = true
                         it.result.throwable.printStackTrace()
-                        imageLoadResult = Result.failure(it.result.throwable)
                     }
                 )
 
-                when (val result = imageLoadResult) {
-                    null -> CircularProgressIndicator()
-                    else -> {
-                        Image(
-                            painter = if (result.isSuccess) painter else
-                                painterResource(Res.drawable.book_error_2),
-                            contentDescription = book.title,
-                            contentScale = if (result.isSuccess) {
-                                ContentScale.Crop
-                            } else {
-                                ContentScale.Fit
-                            },
-                            modifier = Modifier
-                                .aspectRatio(
-                                    ratio = 0.65f,
-                                    matchHeightConstraintsFirst = true
-                                )
-                        )
-                    }
+                when {
+                    isLoading -> CircularProgressIndicator()
+                    isError -> Image(
+                        painter = painterResource(Res.drawable.book_error_2),
+                        contentDescription = "Error loading ${book.title}",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .aspectRatio(
+                                ratio = 0.65f,
+                                matchHeightConstraintsFirst = true
+                            )
+                    )
+                    else -> Image(
+                        painter = painter,
+                        contentDescription = book.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .aspectRatio(
+                                ratio = 0.65f,
+                                matchHeightConstraintsFirst = true
+                            )
+                    )
                 }
             }
             Column(
@@ -114,7 +120,6 @@ fun BookListItem(
                     .fillMaxHeight()
                     .weight(1f),
                 verticalArrangement = Arrangement.Center,
-
             ) {
                 Text(
                     text = book.title,

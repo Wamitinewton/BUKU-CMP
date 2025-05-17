@@ -5,8 +5,8 @@ import com.newton.core.presentation.UiText
 
 data class BookListState(
     val searchQuery: String = "Kotlin",
-    val searchResults: List<Book> = books,
-    val favouriteBooks: List<Book> = books,
+    val searchResults: List<Book> = emptyList(),
+    val favouriteBooks: List<Book> = emptyList(),
     val isLoading: Boolean = false,
     val selectedTab: Int = 0,
     val errorMessage: UiText? = null

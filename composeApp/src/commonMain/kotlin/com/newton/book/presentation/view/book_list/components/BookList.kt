@@ -1,6 +1,5 @@
-package com.newton.book.presentation.view.components
+package com.newton.book.presentation.view.book_list.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn

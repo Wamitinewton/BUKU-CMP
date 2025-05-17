@@ -1,4 +1,4 @@
-package com.newton.book.presentation.view
+package com.newton.book.presentation.view.book_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -36,8 +36,8 @@ import buku_app.composeapp.generated.resources.no_search_results
 import buku_app.composeapp.generated.resources.search_results
 import com.newton.book.presentation.intent.*
 import com.newton.book.presentation.state.*
-import com.newton.book.presentation.view.components.BookList
-import com.newton.book.presentation.view.components.BookSearchBar
+import com.newton.book.presentation.view.book_list.components.BookList
+import com.newton.book.presentation.view.book_list.components.BookSearchBar
 import com.newton.core.presentation.DarkBlue
 import com.newton.core.presentation.DesertWhite
 import com.newton.core.presentation.SandYellow

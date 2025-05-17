@@ -1,4 +1,4 @@
-package com.newton.book.presentation.view
+package com.newton.book.presentation.view.book_list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

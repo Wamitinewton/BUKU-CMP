@@ -1,4 +1,4 @@
-package com.newton.book.presentation.view.components
+package com.newton.book.presentation.view.book_list.components
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*

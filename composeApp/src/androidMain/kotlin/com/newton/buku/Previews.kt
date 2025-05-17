@@ -8,8 +8,8 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.tooling.preview.*
 import com.newton.book.presentation.state.*
-import com.newton.book.presentation.view.*
-import com.newton.book.presentation.view.components.*
+import com.newton.book.presentation.view.book_list.BookListScreen
+import com.newton.book.presentation.view.book_list.components.BookSearchBar
 
 @Preview(backgroundColor = 0xFFF)
 @Composable
