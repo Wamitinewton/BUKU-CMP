@@ -1,20 +1,16 @@
 package com.newton.buku
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.*
+import androidx.lifecycle.compose.*
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.*
 import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
-import com.newton.book.presentation.view.book_list.BookListScreenRoute
+import com.newton.book.presentation.intent.*
+import com.newton.book.presentation.view.book_details.*
+import com.newton.book.presentation.view.book_list.*
 import com.newton.book.presentation.viewModel.*
 import org.jetbrains.compose.ui.tooling.preview.*
 import org.koin.compose.viewmodel.*
@@ -52,13 +48,21 @@ fun App() {
                 composable<Routes.BookDetail> {
                     val selectedBokViewModel =
                         it.sharedKoinViewModel<BookSharedViewModel>(navController)
+                    val viewModel = koinViewModel<BookDetailViewModel>()
                     val selectedBook by selectedBokViewModel.selectedBook.collectAsStateWithLifecycle()
-                    Box(
-                       modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = "Book Detail: $selectedBook")
+
+                    LaunchedEffect(selectedBook) {
+                        selectedBook?.let {
+                            viewModel.onAction(BookDetailAction.OnSelectedBookChange(it))
+                        }
                     }
+
+                    BookDetailScreenRoute(
+                        viewModel = viewModel,
+                        onBackClick = {
+                            navController.navigateUp()
+                        }
+                    )
                 }
             }
         }
@@ -71,7 +75,7 @@ fun App() {
 private inline fun <reified T: ViewModel> NavBackStackEntry.sharedKoinViewModel(
     navController: NavController
 ): T {
-    val navGraphRoute = destination.parent?.route ?: koinViewModel<T>()
+    val navGraphRoute = destination.parent?.route ?: throw IllegalStateException("No parent navigation graph found")
     val parentEntry = remember(this) {
         navController.getBackStackEntry(navGraphRoute)
     }
