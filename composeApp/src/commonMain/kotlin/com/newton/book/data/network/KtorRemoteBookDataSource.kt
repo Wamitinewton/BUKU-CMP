@@ -1,5 +1,6 @@
 package com.newton.book.data.network
 
+import com.newton.book.data.dto.BookWorkDto
 import com.newton.book.data.dto.SearchResponseDto
 import com.newton.book.domain.models.Book
 import com.newton.core.data.safeApiCall
@@ -18,7 +19,7 @@ class KtorRemoteBookDataSource(
         query: String,
         resultLimit: Int?
     ): Result<SearchResponseDto, DataError.Remote> {
-        return safeApiCall {
+        return safeApiCall<SearchResponseDto> {
             httpClient.get(
                 urlString = "$BASE_URL/search.json"
             ) {
@@ -26,6 +27,15 @@ class KtorRemoteBookDataSource(
                 parameter("limit", resultLimit)
                 parameter("fields", "key,title,author_name,author_key,cover_edition_key,cover_i,ratings_average,ratings_count,first_publish_year,language,number_of_pages_median,edition_count")
             }
+        }
+    }
+
+    override suspend fun getBookDetails(bookWorkId: String): Result<BookWorkDto, DataError.Remote> {
+
+        return safeApiCall<BookWorkDto> {
+            httpClient.get(
+                urlString = "$BASE_URL/works/$bookWorkId.json"
+            )
         }
     }
 }

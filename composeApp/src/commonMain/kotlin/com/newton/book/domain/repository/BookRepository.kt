@@ -6,4 +6,5 @@ import com.newton.core.domain.Result
 
 interface BookRepository {
     suspend fun searchBooks(query: String): Result<List<Book>, DataError.Remote>
+    suspend fun getBookDetails(bookWorkId: String): Result<String?, DataError>
 }
