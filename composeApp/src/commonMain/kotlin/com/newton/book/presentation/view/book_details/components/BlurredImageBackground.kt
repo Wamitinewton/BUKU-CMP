@@ -48,6 +48,7 @@ import buku_app.composeapp.generated.resources.remove_from_favorites
 import coil3.compose.rememberAsyncImagePainter
 import com.newton.core.presentation.DarkBlue
 import com.newton.core.presentation.DesertWhite
+import com.newton.core.presentation.PulseAnimation
 import com.newton.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -140,12 +141,9 @@ fun BlurredImageBackground(
                     targetState = imageLoadResult
                 ) { result ->
                     when(result) {
-                        null -> Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+                        null -> PulseAnimation(
+                            modifier = Modifier.size(60.dp)
+                        )
                         else -> {
                             Box {
                                 Image(

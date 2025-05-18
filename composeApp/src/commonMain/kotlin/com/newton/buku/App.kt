@@ -1,5 +1,7 @@
 package com.newton.buku
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
@@ -27,7 +29,10 @@ fun App() {
             navigation<Routes.BookGraph>(
                 startDestination = Routes.BookList
             ) {
-                composable<Routes.BookList> {
+                composable<Routes.BookList>(
+                    exitTransition = { slideOutHorizontally() },
+                    popEnterTransition = { slideInHorizontally() }
+                ) {
                     val viewModel = koinViewModel<BookListViewModel>()
                     val selectedBokViewModel =
                         it.sharedKoinViewModel<BookSharedViewModel>(navController)
@@ -45,7 +50,14 @@ fun App() {
                     )
                 }
 
-                composable<Routes.BookDetail> {
+                composable<Routes.BookDetail>(
+                    enterTransition = { slideInHorizontally { initialOffset ->
+                        initialOffset
+                    } },
+                    exitTransition = { slideOutHorizontally { initialOffset ->
+                        initialOffset
+                    } }
+                ) {
                     val selectedBokViewModel =
                         it.sharedKoinViewModel<BookSharedViewModel>(navController)
                     val viewModel = koinViewModel<BookDetailViewModel>()

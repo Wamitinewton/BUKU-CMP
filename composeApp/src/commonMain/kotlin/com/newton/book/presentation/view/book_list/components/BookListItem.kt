@@ -39,6 +39,7 @@ import buku_app.composeapp.generated.resources.book_error_2
 import coil3.compose.rememberAsyncImagePainter
 import com.newton.book.domain.models.Book
 import com.newton.core.presentation.LightBlue
+import com.newton.core.presentation.PulseAnimation
 import com.newton.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import kotlin.math.round
@@ -92,7 +93,9 @@ fun BookListItem(
                 )
 
                 when {
-                    isLoading -> CircularProgressIndicator()
+                    isLoading -> PulseAnimation(
+                        modifier = Modifier.size(60.dp)
+                    )
                     isError -> Image(
                         painter = painterResource(Res.drawable.book_error_2),
                         contentDescription = "Error loading ${book.title}",
